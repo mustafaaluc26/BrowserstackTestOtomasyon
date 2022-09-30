@@ -24,8 +24,11 @@ import io.cucumber.testng.TestNGCucumberRunner;
                 "timeline:reports/tests/cucumber/timeline",
                 "junit:reports/tests/cucumber/junit/cucumber.xml",
                 "testng:reports/tests/cucumber/testng/cucumber.xml",
-                "json:reports/tests/cucumber/json/cucumber.json"
-        }
+                "json:reports/tests/cucumber/json/cucumber.json",
+        },
+        features = "src/test/resources/features/test",
+        tags = "@aluc"
+
 )
 public class RunWebDriverCucumberTests {
 
