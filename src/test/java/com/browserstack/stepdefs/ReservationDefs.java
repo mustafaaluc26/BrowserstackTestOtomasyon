@@ -7,6 +7,11 @@ import com.browserstack.pageobjects.MainPage;
 import com.browserstack.pageobjects.ReservationPage;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationPostmanReader;
+import com.browserstack.util.ConfigurationReader;
+import com.browserstack.util.Utility;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,6 +21,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class ReservationDefs {
 
@@ -31,6 +39,40 @@ public class ReservationDefs {
     String secondUrl= "";
     String araçListesi1="";
     String araçListesi2="";
+
+    @Before
+    public void setUp() {
+        System.out.println("mustafa");
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        webDriver = RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
+        LoginPage loginPage = new LoginPage();
+        webDriver.manage().window().maximize();
+        webDriver.get(ConfigurationReader.get("url"));
+
+        BrowserUtils.waitForPageToLoad(30);
+
+        try {
+            if (loginPage.cookieXButton.isDisplayed()) {
+                BrowserUtils.waitForClickablility(loginPage.cookieXButton, 10);
+                loginPage.cookieXButton.click();
+            }
+        }catch (Exception e){
+
+        }
+
+    }
+
+    @After
+    public void teardown(Scenario scenario) throws Exception {
+        System.out.println("aluc");
+        if (scenario.isFailed()) {
+            Utility.setSessionStatus(webDriver, "failed", String.format("%s failed.", scenario.getName()));
+        } else {
+            Utility.setSessionStatus(webDriver, "passed", String.format("%s passed.", scenario.getName()));
+        }
+        Thread.sleep(2000);
+        webDriver.quit();
+    }
 
     @Given("the user is on the daily rental")
     public void the_user_is_on_the_daily_rental() {

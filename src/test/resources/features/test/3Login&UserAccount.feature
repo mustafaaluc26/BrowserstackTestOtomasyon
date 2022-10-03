@@ -5,7 +5,7 @@ Feature: Login and User account functions
     When the user changes language "TR"
     Given the user is on the login dropdown
 
-   @aluc #WEB-003
+    #WEB-003
   Scenario: User can register
     When click the register
     And enter the personal information

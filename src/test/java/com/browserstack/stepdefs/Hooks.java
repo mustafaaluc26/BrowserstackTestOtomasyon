@@ -14,6 +14,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class Hooks {
@@ -60,7 +61,9 @@ try {
     }*/
    @Before
    public void setUp() {
-       webDriver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+       System.out.println("mustafa");
+       //webDriver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+       webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
        webDriver = RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
        LoginPage loginPage = new LoginPage();
        webDriver.manage().window().maximize();
@@ -83,6 +86,7 @@ try {
 
     @After
     public void teardown(Scenario scenario) throws Exception {
+        System.out.println("aluc");
         if (scenario.isFailed()) {
             Utility.setSessionStatus(webDriver, "failed", String.format("%s failed.", scenario.getName()));
         } else {
