@@ -1,5 +1,6 @@
 package com.browserstack.pageobjects;
 
+import com.browserstack.RunWebDriverCucumberTests;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationPostmanReader;
 import com.browserstack.util.ConfigurationReader;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class MobilePage extends BasePage{
 
-    public WebDriver webDriver;
+    WebDriver webDriver= RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
     String teslim = "";
     String price = "";
     double priceD=0.0;
@@ -1421,7 +1422,7 @@ public class MobilePage extends BasePage{
     }
 
     public MobilePage(){
-        PageFactory.initElements(webDriver, this);
+        PageFactory.initElements(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), this);
     }
 
 

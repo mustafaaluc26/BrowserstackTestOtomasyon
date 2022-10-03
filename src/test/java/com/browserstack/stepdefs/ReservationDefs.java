@@ -6,12 +6,6 @@ import com.browserstack.pageobjects.LoginPage;
 import com.browserstack.pageobjects.MainPage;
 import com.browserstack.pageobjects.ReservationPage;
 import com.browserstack.util.BrowserUtils;
-import com.browserstack.util.ConfigurationPostmanReader;
-import com.browserstack.util.ConfigurationReader;
-import com.browserstack.util.Utility;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,13 +17,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class ReservationDefs {
 
     ReservationPage resPage=new ReservationPage();
     MainPage main = new MainPage() ;
-    public WebDriver webDriver;
+    WebDriver driver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
 
     String differentPrice1="";
     String differentPrice2="";
@@ -40,39 +33,6 @@ public class ReservationDefs {
     String araçListesi1="";
     String araçListesi2="";
 
-    @Before
-    public void setUp() {
-        System.out.println("mustafa");
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        webDriver = RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
-        LoginPage loginPage = new LoginPage();
-        webDriver.manage().window().maximize();
-        webDriver.get(ConfigurationReader.get("url"));
-
-        BrowserUtils.waitForPageToLoad(30);
-
-        try {
-            if (loginPage.cookieXButton.isDisplayed()) {
-                BrowserUtils.waitForClickablility(loginPage.cookieXButton, 10);
-                loginPage.cookieXButton.click();
-            }
-        }catch (Exception e){
-
-        }
-
-    }
-
-    @After
-    public void teardown(Scenario scenario) throws Exception {
-        System.out.println("aluc");
-        if (scenario.isFailed()) {
-            Utility.setSessionStatus(webDriver, "failed", String.format("%s failed.", scenario.getName()));
-        } else {
-            Utility.setSessionStatus(webDriver, "passed", String.format("%s passed.", scenario.getName()));
-        }
-        Thread.sleep(2000);
-        webDriver.quit();
-    }
 
     @Given("the user is on the daily rental")
     public void the_user_is_on_the_daily_rental() {
@@ -224,9 +184,9 @@ public class ReservationDefs {
         //Actions act=new Actions(driver);
         // act.keyDown(Keys.CONTROL).sendKeys("t").keyUp(Keys.CONTROL).build().perform();
         BrowserUtils.waitFor(1);
-        webDriver.navigate().to("https://staging.yolcu360.com/tr/rent-a-car/istanbul-arac-kiralama/");
+        driver.navigate().to("https://staging.yolcu360.com/tr/rent-a-car/istanbul-arac-kiralama/");
         BrowserUtils.waitFor(2);
-        webDriver.navigate().to("https://staging.yolcu360.com/tr/rent-a-car/");
+        driver.navigate().to("https://staging.yolcu360.com/tr/rent-a-car/");
         BrowserUtils.waitFor(2);
         // driver.get("https://staging.yolcu360.com/tr/rent-a-car");
     }
@@ -234,6 +194,7 @@ public class ReservationDefs {
     @When("search {string}")
     public void search(String location) {
         BrowserUtils.waitForVisibility(new MainPage().findButton,20);
+        //BrowserUtils.waitFor(3);
         resPage.locationSearch(location);
     }
 
@@ -241,8 +202,10 @@ public class ReservationDefs {
     public void clickFindButton() {
         BrowserUtils.waitFor(3);
         BrowserUtils.clickWithJS(resPage.findButton);
-        BrowserUtils.waitFor(1);
-        BrowserUtils.waitForVisibility(resPage.rentNowButton.get(0),50);
+        // resPage.findButton.click();
+        BrowserUtils.waitForVisibility(resPage.rentNowButton.get(0),70);
+        //  BrowserUtils.waitFor(20);
+
     }
 
     @And("enter driver information")
@@ -294,8 +257,8 @@ public class ReservationDefs {
     @And("verify {string} and {string} search location")
     public void verifyAndSearchLocation(String location1, String location2) {
         BrowserUtils.waitFor(1);
-        Assert.assertTrue(webDriver.getCurrentUrl().contains(location1));
-        Assert.assertTrue(webDriver.getCurrentUrl().contains(location2));
+        Assert.assertTrue(driver.getCurrentUrl().contains(location1));
+        Assert.assertTrue(driver.getCurrentUrl().contains(location2));
 
     }
 
@@ -334,7 +297,7 @@ public class ReservationDefs {
 
     @And("click back to previous page")
     public void clickBackToPreviousPage() {
-        webDriver.navigate().back();
+        driver.navigate().back();
         BrowserUtils.waitFor(3);
     }
 
@@ -366,13 +329,13 @@ public class ReservationDefs {
 
     @Then("Users should see error exclamation mark")
     public void usersShouldSeeErrorExclamationMark() {
-        BrowserUtils.verifyElementDisplayed(webDriver.findElement(By.cssSelector("i.icon-icon-info")));
+        BrowserUtils.verifyElementDisplayed(driver.findElement(By.cssSelector("i.icon-icon-info")));
     }
 
     @Then("verify user can not past reservation")
     public void verifyUserCanNotPastReservation() {
         BrowserUtils.waitFor(1);
-        BrowserUtils.verifyElementDisplayed(webDriver.findElement(By.cssSelector("div.col-lg-12.inner")));
+        BrowserUtils.verifyElementDisplayed(driver.findElement(By.cssSelector("div.col-lg-12.inner")));
     }
 
     @Then("check different price on first car detail")
@@ -413,13 +376,13 @@ public class ReservationDefs {
 
     @When("saved current URL")
     public void saved_current_URL() {
-        currentURL= webDriver.getCurrentUrl();
+        currentURL= driver.getCurrentUrl();
         BrowserUtils.waitFor(1);
     }
 
     @Then("URL should be contains selected filter options")
     public void url_should_be_contains_selected_filter_options() {
-        String actualURL= webDriver.getCurrentUrl();
+        String actualURL= driver.getCurrentUrl();
         System.out.println("currentURL = " + currentURL);
         System.out.println("actualURL = " + actualURL);
         Assert.assertEquals(actualURL,currentURL);
@@ -435,8 +398,8 @@ public class ReservationDefs {
     public void saveFirstUrl() {
         BrowserUtils.waitForClickablility(resPage.rentNowButton.get(0),7);
         BrowserUtils.waitFor(2);
-        araçListesi1 = webDriver.findElement(By.xpath("(//b[contains(text(),'Araç')])[2]")).getText();
-        firstUrl = webDriver.getCurrentUrl();
+        araçListesi1 = driver.findElement(By.xpath("(//b[contains(text(),'Araç')])[2]")).getText();
+        firstUrl = driver.getCurrentUrl();
         System.out.println("firstUrl = " + firstUrl);
         System.out.println("araçListesi1 = " + araçListesi1);
     }
@@ -444,8 +407,8 @@ public class ReservationDefs {
     @And("save second url")
     public void saveSecondUrl() {
         BrowserUtils.waitFor(2);
-        araçListesi2 = webDriver.findElement(By.xpath("(//b[contains(text(),'Araç')])[2]")).getText();
-        secondUrl = webDriver.getCurrentUrl();
+        araçListesi2 = driver.findElement(By.xpath("(//b[contains(text(),'Araç')])[2]")).getText();
+        secondUrl = driver.getCurrentUrl();
         System.out.println("secondUrl = " + secondUrl);
         System.out.println("araçListesi2 = " + araçListesi2);
     }
@@ -468,13 +431,13 @@ public class ReservationDefs {
 
     @Then("url contains {string}")
     public void urlContains(String str) {
-        System.out.println("driver.getCurrentUrl() = " + webDriver.getCurrentUrl());
-        Assert.assertTrue(webDriver.getCurrentUrl().contains(str));
+        System.out.println("driver.getCurrentUrl() = " + driver.getCurrentUrl());
+        Assert.assertTrue(driver.getCurrentUrl().contains(str));
     }
 
     @Then("url must not contain {string}")
     public void urlMustNotContain(String str) {
-        Assert.assertFalse(webDriver.getCurrentUrl().contains(str));
+        Assert.assertFalse(driver.getCurrentUrl().contains(str));
     }
 
     @When("click only find button")
@@ -486,7 +449,7 @@ public class ReservationDefs {
 
     @Then("Users should see warning text when the vehicle is not be found")
     public void users_should_see_warning_text_when_the_vehicle_is_not_be_found() {
-        BrowserUtils.waitForVisibility(webDriver.findElement(By.xpath("(//div[@class='empty-screen']/p)[1]")),10);
+        BrowserUtils.waitForVisibility(driver.findElement(By.xpath("(//div[@class='empty-screen']/p)[1]")),10);
         Assert.assertEquals("Maalesef aradığınız kriterlerde müsait araç yok.",resPage.emptyMessageLoc.get(0).getText());
         Assert.assertEquals("Sizin için önerilerimiz:",resPage.emptyMessageLoc.get(1).getText());
         Assert.assertEquals("-Yakındaki farklı bir konumu seçerek arama yapabilirsiniz.",resPage.recommendMessageLoc.get(0).getText());
@@ -512,7 +475,7 @@ public class ReservationDefs {
 
     @When("click empty field")
     public void click_empty_field() {
-        Actions actions = new Actions(webDriver);
+        Actions actions = new Actions(driver);
         actions.moveByOffset(930,330).click().perform();
         //   driver.findElement(By.cssSelector(".home-slider__title")).click();
     }
@@ -541,7 +504,7 @@ public class ReservationDefs {
     @And("verify drop off box {string} location")
     public void verifyDropOffBoxLocation(String expectedLocation) {
         BrowserUtils.waitForVisibility(resPage.rentNowButton.get(0),5);
-        String actualLocation = webDriver.findElement(By.xpath("//input[contains(@data-input-type,'dropoff')]")).getAttribute("value");
+        String actualLocation = driver.findElement(By.xpath("//input[contains(@data-input-type,'dropoff')]")).getAttribute("value");
         Assert.assertTrue(actualLocation.contains(expectedLocation));
     }
 
@@ -564,7 +527,7 @@ public class ReservationDefs {
 
     @Then("verify user on detail page")
     public void verify_user_on_detail_page() {
-        String url=webDriver.getCurrentUrl();
+        String url= driver.getCurrentUrl();
         Assert.assertTrue(url.contains("detail"));
     }
 
@@ -611,13 +574,13 @@ public class ReservationDefs {
     @Then("User should see detail delivery type")
     public void user_should_see_detail_delivery_type() {
         BrowserUtils.waitFor(2);
-        Assert.assertTrue(webDriver.findElement(By.cssSelector(".popover-container-content")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector(".popover-container-content")).isDisplayed());
     }
 
     @When("User select {string} for Delivery Type")
     public void user_select_for_Delivery_Type(String deliveryType) {
         BrowserUtils.waitFor(6);
-        WebElement element=webDriver.findElement(By.xpath("//input[@id='delivery_type-"+deliveryType+"']"));
+        WebElement element= driver.findElement(By.xpath("//input[@id='delivery_type-"+deliveryType+"']"));
         BrowserUtils.scrollToSize(0,1750);
         BrowserUtils.waitFor(2);
         BrowserUtils.clickWithJS(element);
@@ -627,7 +590,7 @@ public class ReservationDefs {
     @When("User hover Aracı nasıl teslim alacağım? on vehicle detail")
     public void user_hover_Aracı_nasıl_teslim_alacağım_on_vehicle_detail() {
         BrowserUtils.waitFor(2);
-        WebElement element2=webDriver.findElement(By.xpath("(//*[@class='teslim'])[1]/span/b"));
+        WebElement element2= driver.findElement(By.xpath("(//*[@class='teslim'])[1]/span/b"));
         BrowserUtils.waitForVisibility(element2,10);
         BrowserUtils.hover(element2);
         BrowserUtils.waitFor(2);
@@ -654,7 +617,7 @@ public class ReservationDefs {
 
     @Then("select {int} installments")
     public void select_installments(Integer int1) {
-        webDriver.findElement(By.id("installment_"+int1)).click();
+        driver.findElement(By.id("installment_"+int1)).click();
     }
 
     @Then("User should be see green check icon for card number and Card owner name")
@@ -675,7 +638,7 @@ public class ReservationDefs {
     @Then("verify pop up error message {string}")
     public void verifyPopUpErrorMessage(String errorText) {
         BrowserUtils.waitFor(10);
-        Assert.assertTrue(errorText.equals(webDriver.findElement(By.cssSelector(".error-message")).getText()));
+        Assert.assertTrue(errorText.equals(driver.findElement(By.cssSelector(".error-message")).getText()));
 
     }
 
@@ -686,9 +649,9 @@ public class ReservationDefs {
         BrowserUtils.waitFor(1);
         System.out.println("x = " + x);
         System.out.println("y = " + y);
-        Assert.assertTrue(webDriver.findElements(By.cssSelector(".city-location")).get(0).getText().contains(y));
+        Assert.assertTrue(driver.findElements(By.cssSelector(".city-location")).get(0).getText().contains(y));
         BrowserUtils.waitFor(1);
-        Assert.assertTrue(webDriver.findElements(By.cssSelector(".city-location")).get(1).getText().contains(x));
+        Assert.assertTrue(driver.findElements(By.cssSelector(".city-location")).get(1).getText().contains(x));
     }
 
     @Then("second verify {string} and {string} is seen on the page")
@@ -696,11 +659,11 @@ public class ReservationDefs {
         String y=pickUp.substring(1);
         String x=drop.substring(1,5);
         BrowserUtils.waitFor(2);
-        Assert.assertTrue(webDriver.findElements(By.cssSelector(".office-text-secondary")).get(0).getText().contains(y));
+        Assert.assertTrue(driver.findElements(By.cssSelector(".office-text-secondary")).get(0).getText().contains(y));
         BrowserUtils.waitFor(2);
-        System.out.println("Driver.get().findElements(By.cssSelector(\".office-text-secondary\")).get(1).getText() = " + webDriver.findElements(By.cssSelector(".office-text-secondary")).get(1).getText());
+        System.out.println("Driver.get().findElements(By.cssSelector(\".office-text-secondary\")).get(1).getText() = " + driver.findElements(By.cssSelector(".office-text-secondary")).get(1).getText());
         System.out.println("x = " + x);
-        Assert.assertTrue(webDriver.findElements(By.cssSelector(".office-text-secondary")).get(1).getText().contains(x));
+        Assert.assertTrue(driver.findElements(By.cssSelector(".office-text-secondary")).get(1).getText().contains(x));
     }
 
     @And("User can not see payment page")
@@ -717,17 +680,6 @@ public class ReservationDefs {
         resPage.findButton.click();
     }
 
-    @Then("verify pop up contains error message {string}")
-    public void verifyPopUpContainsErrorMessage(String text) {
-        BrowserUtils.waitFor(20);
-        if(ConfigurationPostmanReader.get("ActivePayment").equals("MSU")){
-            Assert.assertTrue(webDriver.findElement(By.cssSelector(".error-message")).getText().contains(text));
-        }else {
-            BrowserUtils.verifyElementDisplayed(webDriver.findElement(By.cssSelector(".error-message")));
-        }
-
-
-    }
 
     @Given("Postman get payment type")
     public void postmanGetPaymentType() {

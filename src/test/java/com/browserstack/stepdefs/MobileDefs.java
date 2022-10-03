@@ -19,7 +19,7 @@ import java.util.Map;
 public class MobileDefs {
     ReservationPage page= new ReservationPage();
     MobilePage mobilePage= new MobilePage();
-    public WebDriver webDriver;
+    WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
     LoginPage loginPage = new LoginPage();
 
     @When("the user changes language {string} in mobil view")

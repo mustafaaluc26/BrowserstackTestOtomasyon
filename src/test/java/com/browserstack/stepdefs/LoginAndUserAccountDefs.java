@@ -21,7 +21,8 @@ public class LoginAndUserAccountDefs {
     String name= faker.name().firstName();
     String surname= faker.name().lastName();
     String email=name+surname+"@qatest.com";
-    public WebDriver webDriver;
+    WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
+
     // String myEmail= ConfigurationReader.get("email"); @ hatası bitince bu çalıştırılıp action silinecek
 
     String myPassword= ConfigurationReader.get("password");

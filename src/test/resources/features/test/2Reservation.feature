@@ -1,7 +1,7 @@
 @reservation  @smokeYLC
 Feature: Vehicle Listing & Reservation
-  #Background:
-   # When the user changes language "TR"
+  Background:
+    When the user changes language "TR"
 #    When the user changes currency "try"
 
    @res @test  #Postman properties

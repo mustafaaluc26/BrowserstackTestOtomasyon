@@ -1,5 +1,6 @@
 package com.browserstack.pageobjects;
 
+import com.browserstack.RunWebDriverCucumberTests;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationReader;
 import com.github.javafaker.Faker;
@@ -21,10 +22,10 @@ public class LoginPage extends BasePage{
     Faker faker=new Faker();
     String expectedEmail="";
     String actualEmail="";
-    public WebDriver webDriver;
+    WebDriver webDriver= RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
 
     public LoginPage(){
-        PageFactory.initElements(webDriver, this);
+        PageFactory.initElements(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), this);
     }
 
     @FindBy(xpath = "//span[@class='menu-title']")

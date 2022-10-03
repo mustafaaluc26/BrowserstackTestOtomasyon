@@ -1,6 +1,7 @@
 package com.browserstack.pageobjects;
 
 
+import com.browserstack.RunWebDriverCucumberTests;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationPostmanReader;
 import com.browserstack.util.ConfigurationReader;
@@ -311,10 +312,10 @@ public class ReservationPage extends MainPage{
     @FindBy(css = "#proceed-button")
     public List<WebElement> sendAnyWay;
 
-    public WebDriver webDriver;
+    WebDriver webDriver= RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
 
     public ReservationPage(){
-        PageFactory.initElements(webDriver, this);
+        PageFactory.initElements(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), this);
     }
 
     String teslim = "";
@@ -452,6 +453,7 @@ public class ReservationPage extends MainPage{
             pickUpInput.sendKeys(location);
         }
         BrowserUtils.waitForVisibility(pickUpMenu.get(0),20);
+        //BrowserUtils.waitFor(3);
         pickUpMenu.get(0).click();
         BrowserUtils.waitFor(1);
 

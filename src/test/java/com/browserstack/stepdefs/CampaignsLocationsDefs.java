@@ -22,7 +22,7 @@ import java.util.Map;
 public class CampaignsLocationsDefs {
 
     CampaignsLocationsPage campaignsLocationsPage =new CampaignsLocationsPage();
-    public WebDriver webDriver;
+    WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
     ReservationPage reservationPage = new ReservationPage();
 
     @When("the user changes currency {string}")

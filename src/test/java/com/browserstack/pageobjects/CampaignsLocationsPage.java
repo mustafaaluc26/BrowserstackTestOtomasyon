@@ -1,5 +1,6 @@
 package com.browserstack.pageobjects;
 
+import com.browserstack.RunWebDriverCucumberTests;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationReader;
 import org.junit.Assert;
@@ -22,7 +23,7 @@ import java.util.Set;
 public class CampaignsLocationsPage extends BasePage{
 
     //WebDriver driver = Driver.get();
-    public WebDriver webDriver;
+     WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
 
     @FindBy(xpath = "//*[@*='price-field__cta-btn']")
     public List<WebElement> rentNowButton;
@@ -124,7 +125,7 @@ public class CampaignsLocationsPage extends BasePage{
 
     public CampaignsLocationsPage(){
       //  this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
+        PageFactory.initElements(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), this);
     }
 
     public void enterPromoCode(String code){
@@ -302,7 +303,7 @@ public class CampaignsLocationsPage extends BasePage{
         languageSelect.click();
         WebElement element = webDriver.findElement(By.xpath("(//*[text()='" + language + "'])[2]"));
         BrowserUtils.waitForVisibility(otherLanguage,20);
-        BrowserUtils.waitFor(1);
+        //BrowserUtils.waitFor(4);
         element.click();
         //otherLanguage.click();
         BrowserUtils.waitFor(3);

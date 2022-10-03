@@ -1,5 +1,6 @@
 package com.browserstack.util;
 
+import com.browserstack.RunWebDriverCucumberTests;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -11,8 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.JavascriptExecutor;
-
-import java.sql.Driver;
 import java.time.Duration;
 
 
@@ -24,7 +23,7 @@ public class BrowserUtils {
      * @param element on which to hover
      */
     public static void hover(WebElement element) {
-        Actions actions= new Actions(webDriver);
+        Actions actions= new Actions(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver());
         actions.moveToElement(element).perform();
     }
 
@@ -43,12 +42,12 @@ public class BrowserUtils {
 
 
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeToWaitInSec));
+        WebDriverWait wait = new WebDriverWait(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), Duration.ofSeconds(timeToWaitInSec));
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public static WebElement waitForVisibility(By locator, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeToWaitInSec));
+        WebDriverWait wait = new WebDriverWait(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), Duration.ofSeconds(timeToWaitInSec));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -56,7 +55,7 @@ public class BrowserUtils {
      * Waits for provided element to be clickable
      */
     public static WebElement waitForClickablility(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
+        WebDriverWait wait = new WebDriverWait(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -65,7 +64,7 @@ public class BrowserUtils {
      * Waits for element matching the locator to be clickable
      */
     public static WebElement waitForClickablility(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
+        WebDriverWait wait = new WebDriverWait(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
@@ -80,7 +79,7 @@ public class BrowserUtils {
             }
         };
         try {
-            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOutInSeconds));
+            WebDriverWait wait = new WebDriverWait(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();
@@ -92,8 +91,8 @@ public class BrowserUtils {
      * Clicks on an element using JavaScript
      */
     public static void clickWithJS(WebElement element) {
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", element);
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver()).executeScript("arguments[0].click();", element);
     }
 
 
@@ -101,11 +100,11 @@ public class BrowserUtils {
      * Scrolls down to an element using JavaScript
      */
     public static void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void scrollToSize(int start, int finish) {
-        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        JavascriptExecutor js = (JavascriptExecutor) RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
         js.executeScript("window.scrollBy("+start+","+finish+")");
         BrowserUtils.waitFor(1);
     }
@@ -116,13 +115,13 @@ public class BrowserUtils {
      * Performs double click action on an element
      */
     public static void doubleClick(WebElement element) {
-        new Actions(webDriver).doubleClick(element).build().perform();
+        new Actions(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver()).doubleClick(element).build().perform();
     }
 
     public static void changeMail(WebElement element, String mail) {
         String[] myEmail= mail.split("@");
 
-        Actions actions = new Actions(webDriver);
+        Actions actions = new Actions(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver());
         element.sendKeys(myEmail[0]);
 
         actions.keyDown(Keys.ALT).sendKeys("q").keyUp(Keys.ALT).sendKeys(myEmail[1]).perform();
@@ -140,7 +139,7 @@ public class BrowserUtils {
 
     public static void clickCoordinate(int x, int y){
         BrowserUtils.waitFor(1);
-        Actions actions = new Actions(webDriver);
+        Actions actions = new Actions(RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver());
       //  actions.moveByOffset(x,y).perform();
         actions.moveByOffset(x,y).click().perform();
         BrowserUtils.waitFor(1);

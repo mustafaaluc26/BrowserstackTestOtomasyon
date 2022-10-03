@@ -12,7 +12,8 @@ public class ChangeDefs extends BasePage {
 
 
     ChangePage changePage=new ChangePage();
-    public WebDriver webDriver;
+    WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
+
 
     @Given("User goes to non-canceled order on atlantis page")
     public void user_goes_to_non_canceled_order_on_atlantis_page() {

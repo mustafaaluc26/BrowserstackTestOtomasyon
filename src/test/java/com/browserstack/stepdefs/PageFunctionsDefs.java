@@ -23,7 +23,7 @@ public class PageFunctionsDefs {
 
     MainPage page= new MainPage();
     CampaignsLocationsPage campaignsLocationsPage = new CampaignsLocationsPage();
-    public WebDriver webDriver;
+    WebDriver webDriver=RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
 
     @When("click the monthly rental")
     public void click_the_monthly_rental()  {
@@ -80,6 +80,7 @@ public class PageFunctionsDefs {
     @When("select date and time from calendar")
     public void select_date_and_time_from_calendar(){
         //BrowserUtils.waitForClickablility(page.defaultCalendarDate.get(3),5);
+        BrowserUtils.waitFor(1);
         new ReservationPage().selectDate();
     }
 

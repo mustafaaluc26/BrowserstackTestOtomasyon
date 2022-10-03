@@ -1,5 +1,6 @@
 package com.browserstack.pageobjects;
 
+import com.browserstack.RunWebDriverCucumberTests;
 import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationReader;
 import org.junit.Assert;
@@ -42,8 +43,9 @@ public class ChangePage extends BasePage {
     public WebElement faturaLoc;
 
    // WebDriver driver= Driver.get();
-    public WebDriver webDriver;
-    public void changeRes(){
+   WebDriver webDriver= RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
+
+   public void changeRes(){
 
         webDriver.findElement(By.id("change-order")).click();
 
