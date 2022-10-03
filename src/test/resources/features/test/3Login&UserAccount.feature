@@ -20,7 +20,7 @@ Feature: Login and User account functions
     And click registerButton
     Then the user should not able to register
 
-   #WEB-003.2       #geçersiz eposta texti kontrol edilecek
+  @aluc #WEB-003.2       #geçersiz eposta texti kontrol edilecek
   Scenario Outline: User can not register via invalid information
     When click the register
     And enter the invalid "<e-mail>" and "<password>" information

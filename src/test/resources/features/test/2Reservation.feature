@@ -17,7 +17,7 @@ Feature: Vehicle Listing & Reservation
     And The user click "Yolcutest"
     Then Check the vendor status active or not active
 
-  @aluc    #WEB-009
+      #WEB-009
   Scenario: User should be able to make daily rental search
     Given the user is on the daily rental
     When search "saw"

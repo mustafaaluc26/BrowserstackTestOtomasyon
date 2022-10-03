@@ -21,13 +21,14 @@ public class Hooks {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         LoginPage loginPage = new LoginPage();
         driver.manage().window().maximize();
-        driver.get("https://staging.yolcu360.com/");
+         driver.get(ConfigurationReader.get("url"));
+        //driver.get("https://staging.yolcu360.com/");
 
         BrowserUtils.waitForPageToLoad(30);
 
         try {
             if (loginPage.cookieXButton.isDisplayed()) {
-                BrowserUtils.waitForClickablility(loginPage.cookieXButton, 10);
+                BrowserUtils.waitForClickablility(loginPage.cookieXButton, 20);
                 loginPage.cookieXButton.click();
             }
         }catch (Exception e){
