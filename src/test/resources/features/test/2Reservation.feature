@@ -267,7 +267,7 @@ Feature: Vehicle Listing & Reservation
     And click continuous button
 
 
-  @page   #WEB-036
+     #WEB-036
   Scenario: The invalid user should not make a daily rental reservation
     Given the user is on the daily rental
     When search "saw"
