@@ -6,6 +6,7 @@ import com.browserstack.pageobjects.LoginPage;
 import com.browserstack.pageobjects.MainPage;
 import com.browserstack.pageobjects.ReservationPage;
 import com.browserstack.util.BrowserUtils;
+import com.browserstack.util.ConfigurationPostmanReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -678,6 +679,18 @@ public class ReservationDefs {
     public void verifyFindButtonSeenMainPage() {
         BrowserUtils.waitForClickablility(resPage.findButton,5);
         resPage.findButton.click();
+    }
+
+    @Then("verify pop up contains error message {string}")
+    public void verifyPopUpContainsErrorMessage(String text) {
+        BrowserUtils.waitFor(20);
+        if(ConfigurationPostmanReader.get("ActivePayment").equals("MSU")){
+            Assert.assertTrue(driver.findElement(By.cssSelector(".error-message")).getText().contains(text));
+        }else {
+            BrowserUtils.verifyElementDisplayed(driver.findElement(By.cssSelector(".error-message")));
+        }
+
+
     }
 
 

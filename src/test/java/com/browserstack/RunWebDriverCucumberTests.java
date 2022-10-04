@@ -27,7 +27,7 @@ import io.cucumber.testng.TestNGCucumberRunner;
                 "json:reports/tests/cucumber/json/cucumber.json",
         },
         features = "src/test/resources/features/test",
-        tags = "@login"
+        tags = "@xx"
 
 )
 public class RunWebDriverCucumberTests {

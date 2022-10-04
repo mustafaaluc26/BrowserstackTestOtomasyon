@@ -53,8 +53,8 @@ public class Utility {
         return capabilities;
     }
 
-    public static void setSessionStatus(WebDriver webDriver, String status, String reason) {
-        JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+    public static void setSessionStatus(WebDriver driver, String status, String reason) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript(String.format("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\": \"%s\", \"reason\": \"%s\"}}", status, reason));
     }
 

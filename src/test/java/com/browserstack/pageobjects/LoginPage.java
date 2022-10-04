@@ -177,7 +177,7 @@ public class LoginPage extends BasePage{
         //BrowserUtils.changeMail(emailLogin,myEmail);
         BrowserUtils.waitFor(1);
         passwordLogin.sendKeys(myPassword);
-        BrowserUtils.waitFor(1);
+        BrowserUtils.waitFor(2);
         loginButton.click();
         BrowserUtils.waitFor(1);
     }
@@ -308,13 +308,11 @@ public class LoginPage extends BasePage{
         BrowserUtils.waitForClickablility(signIn,3);
         signIn.click();
         BrowserUtils.waitForClickablility(loginButton,5);
-
-        BrowserUtils.waitFor(1);
-        BrowserUtils.waitForClickablility(loginButton,5);
         BrowserUtils.waitFor(1);
         emailLogin.sendKeys(email);
+        BrowserUtils.waitFor(1);
         passwordLogin.sendKeys(password);
-
+        BrowserUtils.waitFor(1);
         loginButton.click();
         BrowserUtils.waitFor(1);
 

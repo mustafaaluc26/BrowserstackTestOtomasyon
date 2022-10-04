@@ -22,8 +22,6 @@ public class Hooks {
         LoginPage loginPage = new LoginPage();
         driver.manage().window().maximize();
          driver.get(ConfigurationReader.get("url"));
-        //driver.get("https://staging.yolcu360.com/");
-
         BrowserUtils.waitForPageToLoad(30);
 
         try {
@@ -40,14 +38,17 @@ public class Hooks {
 
 
     @After
-    public void teardown(Scenario scenario) throws Exception {
+    public void teardown(Scenario scenario){
         if (scenario.isFailed()) {
+            System.out.println("kaldı");
             Utility.setSessionStatus(driver, "failed", String.format("%s failed.", scenario.getName()));
         } else {
+            System.out.println("geçti");
             Utility.setSessionStatus(driver, "passed", String.format("%s passed.", scenario.getName()));
         }
-        Thread.sleep(2000);
+        BrowserUtils.waitFor(2);
         driver.quit();
+
     }
 
     @Before("@abc")

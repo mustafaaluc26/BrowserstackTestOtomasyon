@@ -6,6 +6,7 @@ import com.browserstack.util.BrowserUtils;
 import com.browserstack.util.ConfigurationReader;
 import com.github.javafaker.Faker;
 import com.browserstack.RunWebDriverCucumberTests;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -281,7 +282,7 @@ public class LoginAndUserAccountDefs {
 
     @Then("Users should see {string} message")
     public void usersShouldSeeMessage(String errorMessage) {
-        Assert.assertEquals(loginPage.errorMessage.get(0).getText(),errorMessage);
+        Assert.assertTrue(loginPage.errorMessage.get(0).getText().equals(errorMessage));
     }
 
     @And("Enter invalid {string}  and {string}")

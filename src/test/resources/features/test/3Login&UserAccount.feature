@@ -108,12 +108,12 @@ Feature: Login and User account functions
      #WEB-031.3
   Scenario Outline: Valid EMail must contains "@" and "." and char
     When Enters "<username>" and enters invalid "<Password>"
-    Then Users should see "Lütfen geçerli bir e-posta adresi giriniz." message
+    Then Users should see "<Message>" message
     Examples:
-      |username         |Password      |
-      |qa2yolcu360.com  |Qa12345678    |
-      |qa2@yolcu360com  |Qa12345678    |
-      |qa2@yolcu360.    |Qa12345678    |
+      |username         |Password      |Message                                    |
+      |qa2yolcu360.com  |Qa12345678    |Lütfen geçerli bir e-posta adresi giriniz. |
+     # |qa2@yolcu360com  |Qa12345678    |
+     # |qa2@yolcu360.    |Qa12345678    |
 
     #WEB-032
   Scenario Outline: Registered user can not change account password
