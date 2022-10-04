@@ -336,6 +336,7 @@ public class PageFunctionsDefs {
     public void verifyMessage(String message) {
         BrowserUtils.waitFor(2);
         Assert.assertTrue(webDriver.findElement(By.cssSelector(".popover-body")).isDisplayed());
+        BrowserUtils.waitFor(1);
         Assert.assertTrue(webDriver.findElement(By.cssSelector(".popover-body")).getText().contains(message));
 
     }

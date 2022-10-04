@@ -8,7 +8,7 @@ Feature: Vehicle Listing & Reservation
   Scenario: Postman key
     Given Postman get payment type
 
-   @res   #WEB-037
+  @page @res   #WEB-037
   Scenario: Yolcu test vendor should be active
     Given The user goes to Atlantis and log in
     When click "Vendor configurations"
@@ -49,7 +49,7 @@ Feature: Vehicle Listing & Reservation
     And click past reservations
     Then verify past reservations number in my account page
 
-  #WEB-010
+  @page #WEB-010
   Scenario: User should be able to make monthly rental search
     Given the user is on the monthly rental
     When search "saw"
@@ -57,14 +57,14 @@ Feature: Vehicle Listing & Reservation
     And click find button
     Then the user should be able to see vehicle listing
 
-  #WEB-011
+  @page  #WEB-011
   Scenario: User should be able to make default daily rental search
     Given the user is on the daily rental
     When search "saw"
     And click find button
     Then the user should be able to see default daily search
 
-   #WEB-012
+  @page  #WEB-012
   Scenario: User should be able to make default monthly rental search
     Given the user is on the monthly rental
     When search "saw"
@@ -101,7 +101,7 @@ Feature: Vehicle Listing & Reservation
     And send sms key
     Then the user should be able to make reservation
 
-  #WEB-014.1
+  @page  #WEB-014.1
   Scenario Outline: User should be able to search his reservation
     Given the user is on the find reservation box
     When the user enters "<reservation no>" and "<email>"
@@ -111,7 +111,7 @@ Feature: Vehicle Listing & Reservation
       | R_A1ZV         | caner@yolcu360.com |
       | R_BQJI         | busra@yolcu360.com |
 
-     #WEB-014.2
+  @page   #WEB-014.2
   Scenario Outline: User should not able to search his reservation
     Given the user is on the find reservation box
     When the user enters "<reservation no>" and "<email>"
@@ -121,7 +121,7 @@ Feature: Vehicle Listing & Reservation
       |                | caner@yolcu360.com |
       | R_BQAA         | busra@yolcu360.com |
 
-   #WEB-026
+  @page  #WEB-026
   Scenario Outline: Vehicle listing page functions should be seen and enabled
     Given search "<first place>"
     When click find button
@@ -137,7 +137,7 @@ Feature: Vehicle Listing & Reservation
       | first place | second place |
       | sabiha      | esenboga     |
 
-  #WEB-027
+  @page #WEB-027
   Scenario: Vehicle detail page functions should be seen and enabled
     Given search "ayt"
     When select forward date and time from calendar
@@ -151,7 +151,7 @@ Feature: Vehicle Listing & Reservation
     And the user verify reviews
     And the user checks and uses the functions of the detail page
 
-  #WEB-028
+  @page #WEB-028
   Scenario: Driver information page functions should be seen and enabled
     Given search "saw"
     When select date and time from calendar
@@ -173,7 +173,7 @@ Feature: Vehicle Listing & Reservation
     And enter payment method
     Then input boxes should be enabled and driver&invoice information should be matched
 
-    #WEB-030
+  @page  #WEB-030
   Scenario: Vehicle search should be done from rent a car URL
     Given the user is on the rent a car url
     When search "saw"
@@ -267,7 +267,7 @@ Feature: Vehicle Listing & Reservation
     And click continuous button
 
 
-    #WEB-036
+  @page   #WEB-036
   Scenario: The invalid user should not make a daily rental reservation
     Given the user is on the daily rental
     When search "saw"
@@ -279,7 +279,7 @@ Feature: Vehicle Listing & Reservation
     And click continuous button
     Then Users should see error exclamation mark
 
-   #WEB-042
+  @page  #WEB-042
   Scenario Outline: The user should select different drop location and check different location price on car details
     Given search "<first place>"
     When click find button
@@ -295,7 +295,7 @@ Feature: Vehicle Listing & Reservation
       | first place | second place |
       | sabiha      | esenboga     |
 
-   #WEB-045  #YLC-1584
+  @page  #WEB-045  #YLC-1584
   Scenario Outline: User should be able to view vehicle listing from landing pages with different date
     Given the user is on the landing pages
     When the user goes the "<location1>" landing page
@@ -316,7 +316,7 @@ Feature: Vehicle Listing & Reservation
       | location1                                | location2              | Verify location               |
       | Ankara Esenboğa Havalimanı Araç Kiralama | İstanbul Araç Kiralama | İstanbul Araç Kiralama        |
 
-    #WEB-046  #YLC-1512
+  @page  #WEB-046  #YLC-1512
   Scenario: User should be able to see selected filter in URL after back from detail page to listing page
     Given the user is on the daily rental
     When search "saw"
@@ -328,7 +328,7 @@ Feature: Vehicle Listing & Reservation
     And click back to previous page
     Then URL should be contains selected filter options
 
-     #WEB-047
+  @page  #WEB-047
   Scenario Outline: When user cancel the different location after searching in a different location, you should search again and the url should change.
     Given search "<first place>"
     When click find button
@@ -348,7 +348,7 @@ Feature: Vehicle Listing & Reservation
       | first place | second place | third place |
       | sabiha      | esenboga     |  izmir      |
 
-   #WEB-048
+  @page  #WEB-048
   Scenario: The user must give up Drop-Off Information by clicking the X button.
     Given search "sabiha"
     When click the different drop off location checkbox
@@ -358,13 +358,13 @@ Feature: Vehicle Listing & Reservation
     Then url contains "sabiha"
     Then url must not contain "esenboga"
 
-    #WEB-049  #YLC-1515
+  @page  #WEB-049  #YLC-1515
   Scenario: The user should receive a warning text in cases Where the vehicle is not found
     When search "Aü Sivil Havacılık"
     And click only find button
     Then Users should see warning text when the vehicle is not be found
 
-    #WEB-050 #YLC-1423
+  @page   #WEB-050 #YLC-1423
   Scenario: The user should be search only put start date
     Given the user is on the daily rental
     When search "saw"
@@ -374,7 +374,7 @@ Feature: Vehicle Listing & Reservation
     When click find button
     Then the user should be able to see default daily search
 
-   #WEB-051  #YLC-1451
+  @page  #WEB-051  #YLC-1451
   Scenario: The user should be able to search after click pick-up box button(firstly pick-up box is must be entered location) on LandingPage
     Given the user is on the landing pages
     When the user goes the "Bursa Araç Kiralama" landing page
@@ -385,7 +385,7 @@ Feature: Vehicle Listing & Reservation
     And select forward date and time from calendar
     Then click find button
 
-    #WEB-052  #YLC-1451
+  @page  #WEB-052  #YLC-1451
   Scenario: The user should be able to search after click pick-up box button(firstly pick-up box is must be entered location) on homepage
     Given the user is on the daily rental
     When search "esenboga"
@@ -423,7 +423,7 @@ Feature: Vehicle Listing & Reservation
       |EN|
       |DE|
 
-      #WEB-055  #YLC-1436
+  @page    #WEB-055  #YLC-1436
   Scenario: The user who wants to leave the vehicle in a different place should go to the Vehicle detail page and see the drop location on the listing page when returns
     Given search "saw"
     When click find button
@@ -437,13 +437,13 @@ Feature: Vehicle Listing & Reservation
     Then url should "equal"
     And verify drop off box "Esenboğa" location
 
-    #WEB-061   #YLC-1421
+  @page   #WEB-061   #YLC-1421
   Scenario: User should be able to see sorted parameter on url
     Given search "saw"
     When click find button
     And the user uses sorting criteria then url should change
 
-     #WEB-062 YLC-1358
+  @page    #WEB-062 YLC-1358
   Scenario: The user can search vehicle by selecting a different drop off location in the Landing Page
     Given the user is on the landing pages
     When the user goes the "İstanbul Sabiha Gökçen Havalimanı Araç Kiralama" landing page
@@ -455,7 +455,7 @@ Feature: Vehicle Listing & Reservation
     And click pickUp icon
     Then the user should be able to see default daily search
 
-     #WEB-063 #YLC-1443
+  @page   #WEB-063 #YLC-1443
   Scenario: User should be able to back from vehicle driver information page
     Given search "saw"
     When click find button
@@ -469,7 +469,7 @@ Feature: Vehicle Listing & Reservation
     And click back button
     Then the user should be able to see vehicle listing
 
-  @res   #WEB-074 #YLC-91
+  @page @res   #WEB-074 #YLC-91
   Scenario: User should be able to see delivery type detail when hover delivery type on list, vehicle detail and reservation confirm page
     Given the user is on the daily rental
     When search "saw"
@@ -528,7 +528,7 @@ Feature: Vehicle Listing & Reservation
     And click pay button
     Then verify open payment page
 
-    #WEB-081    #YLC-1705
+  @page  #WEB-081    #YLC-1705
   Scenario Outline: User should be able to see pickUp and drop location on vehicle detail page
     Given search "<first place>"
     When click the different drop off location checkbox

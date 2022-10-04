@@ -20,8 +20,10 @@ public class Hooks {
         driver = RunWebDriverCucumberTests.getManagedWebDriver().getWebDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         LoginPage loginPage = new LoginPage();
+        BrowserUtils.waitFor(1);
         driver.manage().window().maximize();
-         driver.get(ConfigurationReader.get("url"));
+        BrowserUtils.waitFor(1);
+        driver.get(ConfigurationReader.get("url"));
         BrowserUtils.waitForPageToLoad(30);
 
         try {

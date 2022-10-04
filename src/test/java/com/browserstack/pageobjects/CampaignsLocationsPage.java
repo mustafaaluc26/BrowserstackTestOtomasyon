@@ -982,6 +982,7 @@ public class CampaignsLocationsPage extends BasePage{
                 if(!handle.equals(currentWindowHandle)){
                     webDriver.switchTo().window(handle);
                     String currentURL=webDriver.getCurrentUrl();
+                    BrowserUtils.waitFor(2);
                     Assert.assertTrue(currentURL.contains(expected.get(i-2)));
                     webDriver.close();
                     BrowserUtils.waitFor(2);

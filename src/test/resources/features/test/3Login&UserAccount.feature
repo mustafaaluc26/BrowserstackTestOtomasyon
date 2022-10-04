@@ -20,7 +20,7 @@ Feature: Login and User account functions
     And click registerButton
     Then the user should not able to register
 
-  @aluc #WEB-003.2       #geçersiz eposta texti kontrol edilecek
+   #WEB-003.2       #geçersiz eposta texti kontrol edilecek
   Scenario Outline: User can not register via invalid information
     When click the register
     And enter the invalid "<e-mail>" and "<password>" information
@@ -108,10 +108,10 @@ Feature: Login and User account functions
      #WEB-031.3
   Scenario Outline: Valid EMail must contains "@" and "." and char
     When Enters "<username>" and enters invalid "<Password>"
-    Then Users should see "<Message>" message
+    Then Users should see "Lütfen geçerli bir e-posta adresi giriniz." message
     Examples:
-      |username         |Password      |Message                                    |
-      |qa2yolcu360.com  |Qa12345678    |Lütfen geçerli bir e-posta adresi giriniz. |
+      |username         |Password      |
+      |qa2yolcu360.com  |Qa12345678    |
      # |qa2@yolcu360com  |Qa12345678    |
      # |qa2@yolcu360.    |Qa12345678    |
 
