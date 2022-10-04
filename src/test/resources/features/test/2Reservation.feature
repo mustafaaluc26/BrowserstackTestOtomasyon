@@ -469,7 +469,7 @@ Feature: Vehicle Listing & Reservation
     And click back button
     Then the user should be able to see vehicle listing
 
-  @page @res   #WEB-074 #YLC-91
+   @res   #WEB-074 #YLC-91
   Scenario: User should be able to see delivery type detail when hover delivery type on list, vehicle detail and reservation confirm page
     Given the user is on the daily rental
     When search "saw"

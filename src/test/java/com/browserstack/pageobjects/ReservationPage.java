@@ -810,7 +810,7 @@ public class ReservationPage extends MainPage{
         String actualResNo= searchReservationNoLocator.getText();
         BrowserUtils.scrollToSize(0,900);
         String actualEmail=searchReservationMailLocator.getText();
-
+        BrowserUtils.waitFor(1);
         Assert.assertEquals(reservationNo, actualResNo);
         Assert.assertEquals(email, actualEmail);
     }
